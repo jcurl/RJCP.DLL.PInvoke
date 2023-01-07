@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;netstandard2.1</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <Configurations>Debug;Release</Configurations>
+    <NeutralLanguage>en-US</NeutralLanguage>
+
+    <AssemblyName>RJCP.Native.PInvoke</AssemblyName>
+    <AssemblyTitle>RJCP.Native.PInvoke</AssemblyTitle>
+    <Product>RJCP.Native.PInvoke</Product>
+    <RootNamespace>RJCP.Native</RootNamespace>
+
+    <Authors>Jason Curl</Authors>
+    <Copyright>(C) 2023, Jason Curl</Copyright>
+    <Company></Company>
+    <PackageId>RJCP.Native.PInvoke</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/jcurl</PackageProjectUrl>
+    <Description>An collection of internal P/Invoke definitions.</Description>
+    <Version>0.8.0</Version>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>Default</AnalysisMode>
+    <AnalysisLevel>latest</AnalysisLevel>
+
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Win32\Kernel32+CommProp.cs" />
+    <Compile Include="Win32\Kernel32+COMMTIMEOUTS.cs" />
+    <Compile Include="Win32\Kernel32+COMSTAT.cs" />
+    <Compile Include="Win32\Kernel32+ComStatErrors.cs" />
+    <Compile Include="Win32\Kernel32+ComStatFlags.cs" />
+    <Compile Include="Win32\Kernel32+CreationDisposition.cs" />
+    <Compile Include="Win32\Kernel32+DCB.cs" />
+    <Compile Include="Win32\Kernel32+DcbFlags.cs" />
+    <Compile Include="Win32\Kernel32+ExtendedFunctions.cs" />
+    <Compile Include="Win32\Kernel32+FileAccess.cs" />
+    <Compile Include="Win32\Kernel32+FileAttributes.cs" />
+    <Compile Include="Win32\Kernel32+FileShare.cs" />
+    <Compile Include="Win32\Kernel32+FileType.cs" />
+    <Compile Include="Win32\Kernel32+LoadLibraryFlags.cs" />
+    <Compile Include="Win32\Kernel32+ModemStat.cs" />
+    <Compile Include="Win32\Kernel32+OSArchitecture.cs" />
+    <Compile Include="Win32\Kernel32+OSVERSIONINFOEX.cs" />
+    <Compile Include="Win32\Kernel32+PROCESSOR_INFO_UNION.cs" />
+    <Compile Include="Win32\Kernel32+ProvSubType.cs" />
+    <Compile Include="Win32\Kernel32+PurgeFlags.cs" />
+    <Compile Include="Win32\Kernel32+REGSAM.cs" />
+    <Compile Include="Win32\Kernel32+REG_DATATYPE.cs" />
+    <Compile Include="Win32\Kernel32+SerialEventMask.cs" />
+    <Compile Include="Win32\Kernel32+SYSTEM_INFO.cs" />
+    <Compile Include="Win32\Kernel32+WinPlatformId.cs" />
+    <Compile Include="Win32\Kernel32.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\Kernel32+OSVERSIONINFO.cs" />
+    <Compile Include="Win32\ntdll.cs" />
+    <Compile Include="Win32\SafeHandles\SafeLibraryHandle.cs" />
+    <Compile Include="Win32\WinError.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
