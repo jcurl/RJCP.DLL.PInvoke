@@ -19,7 +19,7 @@
     <PackageId>RJCP.Native.PInvoke</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/jcurl</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/jcurl/RJCP.DLL.PInvoke</PackageProjectUrl>
     <Description>An collection of internal P/Invoke definitions.</Description>
     <Version>0.8.0</Version>
 
@@ -48,8 +48,23 @@
     <Reference Include="System.Core" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETStandard'">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Marshalling.cs" />
+    <Compile Include="Platform.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\CfgMgr32.cs" />
+    <None Include="Win32\CfgMgr32.NetCore.cs" />
+    <None Include="Win32\CfgMgr32.NetFramework.cs" />
+    <Compile Include="Win32\CfgMgr32+CM_DRP.cs" />
+    <Compile Include="Win32\CfgMgr32+CM_LOCATE_DEVINST.cs" />
+    <Compile Include="Win32\CfgMgr32+CONFIGRET.cs" />
+    <Compile Include="Win32\CfgMgr32+DN_STATUS.cs" />
+    <Compile Include="Win32\CfgMgr32+RegDisposition.cs" />
     <Compile Include="Win32\Kernel32+CommProp.cs" />
     <Compile Include="Win32\Kernel32+COMMTIMEOUTS.cs" />
     <Compile Include="Win32\Kernel32+COMSTAT.cs" />
@@ -66,6 +81,7 @@
     <Compile Include="Win32\Kernel32+LoadLibraryFlags.cs" />
     <Compile Include="Win32\Kernel32+ModemStat.cs" />
     <Compile Include="Win32\Kernel32+OSArchitecture.cs" />
+    <Compile Include="Win32\Kernel32+OSVERSIONINFO.cs" />
     <Compile Include="Win32\Kernel32+OSVERSIONINFOEX.cs" />
     <Compile Include="Win32\Kernel32+PROCESSOR_INFO_UNION.cs" />
     <Compile Include="Win32\Kernel32+ProvSubType.cs" />
@@ -76,11 +92,18 @@
     <Compile Include="Win32\Kernel32+SYSTEM_INFO.cs" />
     <Compile Include="Win32\Kernel32+WinPlatformId.cs" />
     <Compile Include="Win32\Kernel32.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Win32\Kernel32+OSVERSIONINFO.cs" />
     <Compile Include="Win32\ntdll.cs" />
+    <Compile Include="Win32\SafeHandles\SafeDevInst.cs" />
     <Compile Include="Win32\SafeHandles\SafeLibraryHandle.cs" />
     <Compile Include="Win32\WinError.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <Compile Include="Win32\CfgMgr32.NetFramework.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETStandard'">
+    <Compile Include="Win32\CfgMgr32.NetCore.cs" />
   </ItemGroup>
 
   <ItemGroup>
