@@ -58,8 +58,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Win32\CfgMgr32.cs" />
-    <None Include="Win32\CfgMgr32.NetCore.cs" />
-    <None Include="Win32\CfgMgr32.NetFramework.cs" />
+    <Compile Include="Win32\CfgMgr32.Managed.cs" />
     <Compile Include="Win32\CfgMgr32+CM_DRP.cs" />
     <Compile Include="Win32\CfgMgr32+CM_LOCATE_DEVINST.cs" />
     <Compile Include="Win32\CfgMgr32+CONFIGRET.cs" />
@@ -96,14 +95,6 @@
     <Compile Include="Win32\SafeHandles\SafeDevInst.cs" />
     <Compile Include="Win32\SafeHandles\SafeLibraryHandle.cs" />
     <Compile Include="Win32\WinError.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
-    <Compile Include="Win32\CfgMgr32.NetFramework.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETStandard'">
-    <Compile Include="Win32\CfgMgr32.NetCore.cs" />
   </ItemGroup>
 
   <ItemGroup>

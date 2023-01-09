@@ -22,7 +22,7 @@
         public static extern CONFIGRET CM_Get_Device_ID_Size(out int length, SafeDevInst devInst, int flags);
 
         [DllImport("cfgmgr32.dll", SetLastError = false, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CM_Get_Device_ID_ListW")]
-        private static extern CONFIGRET CM_Get_Device_ID_List(string filter, [Out] char[] buffer, int length, int flags);
+        private static unsafe extern CONFIGRET CM_Get_Device_ID_List(string filter, char* buffer, int length, int flags);
 
         [DllImport("cfgmgr32.dll", SetLastError = false, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CM_Get_Device_ID_List_SizeW")]
         private static extern CONFIGRET CM_Get_Device_ID_List_Size(out int length, string filter, int flags);
@@ -34,16 +34,7 @@
         private static extern CONFIGRET CM_Get_DevNode_Registry_Property(SafeDevInst devInst, CM_DRP property, out int dataType, out int buffer, ref int bufferLen, int flags);
 
         [DllImport("cfgmgr32.dll", SetLastError = false, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CM_Get_DevNode_Registry_PropertyW")]
-        private static extern CONFIGRET CM_Get_DevNode_Registry_Property(SafeDevInst devInst, CM_DRP property, out int dataType, [Out] char[] buffer, ref int bufferLen, int flags);
-
-        [DllImport("cfgmgr32.dll", SetLastError = false, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CM_Get_DevNode_Registry_PropertyW")]
         private static unsafe extern CONFIGRET CM_Get_DevNode_Registry_Property(SafeDevInst devInst, CM_DRP property, out int dataType, char* buffer, ref int bufferLen, int flags);
-
-        public static CONFIGRET CM_Get_DevNode_Registry_Property(SafeDevInst devInst, CM_DRP property, out int dataType, out int value)
-        {
-            int length = 4;
-            return CM_Get_DevNode_Registry_Property(devInst, property, out dataType, out value, ref length, 0);
-        }
 
         [DllImport("cfgmgr32.dll", SetLastError = false, ExactSpelling = true)]
         public static extern CONFIGRET CM_Get_DevNode_Status(out DN_STATUS status, out int problem, SafeDevInst devInst, int flags);
