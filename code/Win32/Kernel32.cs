@@ -18,16 +18,22 @@
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateFileW", ExactSpelling = true)]
-        public static extern SafeFileHandle CreateFile(string lpFileName,
-            FileAccess dwDesiredAccess, FileShare dwShareMode, IntPtr lpSecurityAttributes,
-            CreationDisposition dwCreationDisposition, FileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile);
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CreateFileW")]
+        public static extern SafeFileHandle CreateFile(string fileName,
+            ACCESS_MASK access, FileShare share, IntPtr securityAttributes, CreationDisposition creationDisposition,
+            CreateFileFlags flagsAndAttributes, IntPtr templateFile);
 
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern bool FreeLibrary(IntPtr hModule);
 
         [DllImport("kernel32.dll", ExactSpelling = true)]
         public static extern IntPtr GetCurrentProcess();
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern bool GetFileInformationByHandle(SafeFileHandle hFile, out BY_HANDLE_FILE_INFORMATION fileInfo);
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, FILE_INFO_BY_HANDLE_CLASS infoClass, out FILE_ID_INFO fileIdInfo, int dwBufferSize);
 
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern FileType GetFileType(SafeFileHandle hFile);

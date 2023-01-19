@@ -3,20 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJCP.Native.PInvoke", "code\RJCP.Native.PInvoke.csproj", "{DB98125A-7B2C-458F-9556-1DB9284EC542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RJCP.Native.PInvoke", "code\RJCP.Native.PInvoke.csproj", "{DB98125A-7B2C-458F-9556-1DB9284EC542}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RJCP.Native.PInvokeTest", "test\RJCP.Native.PInvokeTest.csproj", "{DAA815C1-B634-4FAD-A99C-26347CB36515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB98125A-7B2C-458F-9556-1DB9284EC542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB98125A-7B2C-458F-9556-1DB9284EC542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB98125A-7B2C-458F-9556-1DB9284EC542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB98125A-7B2C-458F-9556-1DB9284EC542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA815C1-B634-4FAD-A99C-26347CB36515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA815C1-B634-4FAD-A99C-26347CB36515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA815C1-B634-4FAD-A99C-26347CB36515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA815C1-B634-4FAD-A99C-26347CB36515}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9AFE1EE7-4D4F-43F9-AC96-470BA445383C}
 	EndGlobalSection
 EndGlobal
