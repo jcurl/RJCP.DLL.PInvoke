@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         [Flags]
         public enum LoadLibraryFlags : uint

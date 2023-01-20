@@ -2,7 +2,7 @@
 {
     using System.Runtime.InteropServices;
 
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         [StructLayout(LayoutKind.Sequential, Pack = 4)]
         public struct BY_HANDLE_FILE_INFORMATION

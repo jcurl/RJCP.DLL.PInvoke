@@ -3,7 +3,7 @@
     /// <content>
     /// Contains the <see cref="SECURITY_IMPERSONATION_LEVEL"/> nested type.
     /// </content>
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         /// <summary>
         /// Contains values that specify security impersonation levels. Security impersonation levels govern the degree to which a server process can act on behalf of a client process.

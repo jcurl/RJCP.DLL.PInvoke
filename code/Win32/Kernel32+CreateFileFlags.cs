@@ -3,7 +3,7 @@
     using System;
 
     /// <content>Contains the <see cref="CreateFileFlags"/> nested type.</content>
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         /// <summary>
         /// File attributes, flags, and security settings that are passed to the CreateFile method.

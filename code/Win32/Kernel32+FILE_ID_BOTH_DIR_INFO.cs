@@ -2,7 +2,7 @@
 {
     using System.Runtime.InteropServices;
 
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct FILE_ID_BOTH_DIR_INFO

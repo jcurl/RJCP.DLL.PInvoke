@@ -1,6 +1,6 @@
 ﻿namespace RJCP.Native.Win32
 {
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         public enum FILE_INFO_BY_HANDLE_CLASS
         {

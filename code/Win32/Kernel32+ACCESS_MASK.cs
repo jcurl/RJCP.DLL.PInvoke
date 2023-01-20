@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
 
-    internal partial class Kernel32
+    internal static partial class Kernel32
     {
         /// <summary>
         /// The ACCESS_MASK type is a bit mask that specifies a set of access rights in the access mask of an access
