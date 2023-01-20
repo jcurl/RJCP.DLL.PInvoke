@@ -83,6 +83,7 @@
     <Compile Include="Win32\Kernel32+FILE_ID_BOTH_DIR_INFO.cs" />
     <Compile Include="Win32\Kernel32+FILE_ID_INFO.cs" />
     <Compile Include="Win32\Kernel32+FILE_INFO_BY_HANDLE_CLASS.cs" />
+    <Compile Include="Win32\Kernel32+IMAGE_FILE_MACHINE.cs" />
     <Compile Include="Win32\Kernel32+LargeInteger.cs" />
     <Compile Include="Win32\Kernel32+LoadLibraryFlags.cs" />
     <Compile Include="Win32\Kernel32+ModemStat.cs" />
@@ -98,10 +99,15 @@
     <Compile Include="Win32\Kernel32+SerialEventMask.cs" />
     <Compile Include="Win32\Kernel32+SYSTEM_INFO.cs" />
     <Compile Include="Win32\Kernel32+WinPlatformId.cs" />
+    <Compile Include="Win32\Kernel32+WinProductInfo.cs" />
+    <Compile Include="Win32\Kernel32+WinProductType.cs" />
+    <Compile Include="Win32\Kernel32+WinSuite.cs" />
     <Compile Include="Win32\Kernel32.cs" />
     <Compile Include="Win32\ntdll.cs" />
     <Compile Include="Win32\SafeHandles\SafeDevInst.cs" />
     <Compile Include="Win32\SafeHandles\SafeLibraryHandle.cs" />
+    <Compile Include="Win32\User32+SYSTEM_METRICS.cs" />
+    <Compile Include="Win32\User32.cs" />
     <Compile Include="Win32\WinError.cs" />
   </ItemGroup>
 

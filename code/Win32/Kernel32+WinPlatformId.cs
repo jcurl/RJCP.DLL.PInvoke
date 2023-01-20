@@ -4,7 +4,6 @@
     {
         public enum WinPlatformId
         {
-            Unknown = -1,
             Win32s = 0,
             Win9x = 1,
             WinNT = 2,

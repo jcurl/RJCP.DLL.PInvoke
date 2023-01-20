@@ -1,4 +1,4 @@
-﻿namespace RJCP.Native.Win32
+﻿namespace RJCP.Native.Win32.Kernel
 {
     using System;
     using System.IO;
@@ -8,7 +8,7 @@
 
     [TestFixture]
     [Platform(Include = "Win32")]
-    public class Kernel
+    public class File
     {
         private static readonly string TextFileName = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestResource", "TextFile.txt");
 

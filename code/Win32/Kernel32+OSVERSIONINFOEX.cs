@@ -16,13 +16,19 @@
             public string CSDVersion;
             public ushort ServicePackMajor;
             public ushort ServicePackMinor;
-            public ushort SuiteMask;
-            public byte ProductType;
+            private ushort wSuiteMask;
+            private byte bProductType;
             public byte Reserved;
+
+            // The value here is defined as 16-bit, but there are up to 32-bits defined in NT. Not sure where they are
+            // exposed (SharedUserData->SuiteMask).
+            public WinSuite SuiteMask => (WinSuite)wSuiteMask;
+
+            public WinProductType ProductType => (WinProductType)bProductType;
 
             public OSVERSIONINFOEX()
             {
-                OSVersionInfoSize = Marshal.SizeOf(this);
+                OSVersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
             }
         }
     }

@@ -45,8 +45,15 @@
         public static extern bool GetOverlappedResult(SafeFileHandle hFile,
            [In] ref NativeOverlapped lpOverlapped, out uint lpNumberOfBytesTransferred, bool bWait);
 
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern bool GetProductInfo(int osMajor, int osMinor, int spMajor, int spMinor, out WinProductInfo productInfo);
+
         [DllImport("kernel32.dll", ExactSpelling = true)]
         public static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+
+        // https://learn.microsoft.com/en-us/windows/win32/sysinfo/targeting-your-application-at-windows-8-1
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        public static extern int GetVersion();
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "GetVersionExW")]
         public static extern bool GetVersionEx([In, Out] OSVERSIONINFO osVersionInfo);
@@ -56,6 +63,9 @@
 
         [DllImport("kernel32.dll", ExactSpelling = true)]
         public static extern bool IsWow64Process(IntPtr hProcess, out bool wow64);
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        public static extern bool IsWow64Process2(IntPtr hProcess, out IMAGE_FILE_MACHINE processMachine, out IMAGE_FILE_MACHINE nativeMachine);
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadLibraryW")]
         public static extern SafeLibraryHandle LoadLibrary(string lpFileName);
