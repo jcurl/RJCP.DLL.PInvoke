@@ -53,9 +53,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="DbgHelp\MiniDump.cs" />
     <Compile Include="Kernel32\File.cs" />
+    <Compile Include="Kernel32\Process.cs" />
     <Compile Include="Kernel32\SystemInfo.cs" />
     <Compile Include="User32\SystemMetrics.cs" />
+    <Compile Include="WinBrand\WinBrandTest.cs" />
   </ItemGroup>
 
   <ItemGroup>

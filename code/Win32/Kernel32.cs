@@ -29,6 +29,12 @@
         [DllImport("kernel32.dll", ExactSpelling = true)]
         public static extern IntPtr GetCurrentProcess();
 
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        public static extern uint GetCurrentProcessId();
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        public static extern uint GetCurrentThreadId();
+
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern bool GetFileInformationByHandle(SafeFileHandle hFile, out BY_HANDLE_FILE_INFORMATION fileInfo);
 

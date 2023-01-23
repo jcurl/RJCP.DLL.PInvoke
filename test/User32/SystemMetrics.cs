@@ -1,7 +1,8 @@
-﻿namespace RJCP.Native.Win32.User
+﻿namespace RJCP.Native.Win32.User32
 {
     using System;
     using NUnit.Framework;
+    using Win32;
 
     [TestFixture]
     [Platform(Include = "Win32")]

@@ -64,6 +64,9 @@
     <Compile Include="Win32\CfgMgr32+CONFIGRET.cs" />
     <Compile Include="Win32\CfgMgr32+DN_STATUS.cs" />
     <Compile Include="Win32\CfgMgr32+RegDisposition.cs" />
+    <Compile Include="Win32\DbgHelp+MINIDUMP_EXCEPTION_INFORMATION.cs" />
+    <Compile Include="Win32\DbgHelp+MINIDUMP_TYPE.cs" />
+    <Compile Include="Win32\DbgHelp.cs" />
     <Compile Include="Win32\Kernel32+ACCESS_MASK.cs" />
     <Compile Include="Win32\Kernel32+BY_HANDLE_FILE_INFORMATION.cs" />
     <Compile Include="Win32\Kernel32+CommProp.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Win32\SafeHandles\SafeLibraryHandle.cs" />
     <Compile Include="Win32\User32+SYSTEM_METRICS.cs" />
     <Compile Include="Win32\User32.cs" />
+    <Compile Include="Win32\WinBrand.cs" />
     <Compile Include="Win32\WinError.cs" />
   </ItemGroup>
 

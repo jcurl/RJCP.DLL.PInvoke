@@ -1,10 +1,11 @@
-﻿namespace RJCP.Native.Win32.Kernel
+﻿namespace RJCP.Native.Win32.Kernel32
 {
     using System;
     using System.IO;
     using System.Runtime.InteropServices;
     using Microsoft.Win32.SafeHandles;
     using NUnit.Framework;
+    using Win32;
 
     [TestFixture]
     [Platform(Include = "Win32")]

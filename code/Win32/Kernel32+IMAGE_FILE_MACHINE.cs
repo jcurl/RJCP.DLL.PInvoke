@@ -17,24 +17,29 @@
             I386 = 0x014c,
 
             /// <summary>
-            /// MIPS little-endian, 0x160 big-endian.
+            /// MIPS big-endian
             /// </summary>
-            R3000 = 0x0162,
-
-            /// <summary>
-            /// MIPS little-endian.
-            /// </summary>
-            R4000 = 0x0166,
+            MIPS_R3000_BE = 0x0160,
 
             /// <summary>
             /// MIPS little-endian
             /// </summary>
-            R10000 = 0x0168,
+            MIPS_R3000 = 0x0162,
+
+            /// <summary>
+            /// MIPS little-endian.
+            /// </summary>
+            MIPS_R4000 = 0x0166,
+
+            /// <summary>
+            /// MIPS little-endian
+            /// </summary>
+            MIPS_R10000 = 0x0168,
 
             /// <summary>
             /// MIPS little-endian WCE v2.
             /// </summary>
-            WCEMIPSV2 = 0x0169,
+            MIPS_WCEMIPSV2 = 0x0169,
 
             /// <summary>
             /// Alpha_AXP.
@@ -71,7 +76,7 @@
             /// <summary>
             /// ARM Thumb/Thumb-2 Little-Endian.
             /// </summary>
-            THUMB = 0x01c2,
+            ARM_THUMB = 0x01c2,
 
             /// <summary>
             /// ARM Thumb-2 Little-Endian.
