@@ -22,6 +22,7 @@ document will be updated over time as information is found and used.
 - [3. Declaring P/Invoke Methods](#3-declaring-pinvoke-methods)
   - [3.1. Cross Platform P/Invoke Library Resolution](#31-cross-platform-pinvoke-library-resolution)
   - [3.2. Identifying a Windows 32-bit or 64-bit library](#32-identifying-a-windows-32-bit-or-64-bit-library)
+    - [3.2.1. .NET 3.1 Library Resolution](#321-net-31-library-resolution)
   - [3.3. Win32 specific attributes](#33-win32-specific-attributes)
 - [4. Marshalling Input and Output Parameters](#4-marshalling-input-and-output-parameters)
   - [4.1. Blittable Types](#41-blittable-types)
@@ -37,6 +38,7 @@ document will be updated over time as information is found and used.
       - [4.4.3.2. Strings Copied into Output Buffers](#4432-strings-copied-into-output-buffers)
   - [4.5. Marshalling Structs](#45-marshalling-structs)
     - [4.5.1. Field Alignment](#451-field-alignment)
+      - [4.5.1.1. Using C++ To Test Alignment (Example DbgHelp)](#4511-using-c-to-test-alignment-example-dbghelp)
     - [4.5.2. Blittable Strings (actually char\[\])](#452-blittable-strings-actually-char)
     - [4.5.3. Strings in Structs](#453-strings-in-structs)
     - [4.5.4. Fixed Size Buffers](#454-fixed-size-buffers)
@@ -46,16 +48,17 @@ document will be updated over time as information is found and used.
     - [4.6.2. Memory Buffers for Callbacks](#462-memory-buffers-for-callbacks)
     - [4.6.3. Garbage Collection](#463-garbage-collection)
   - [4.7. Safe Handles](#47-safe-handles)
-- [5. Appendix](#5-appendix)
-  - [5.1. References](#51-references)
-  - [5.2. Abbreviations](#52-abbreviations)
+- [5. Callbacks and Function Pointers](#5-callbacks-and-function-pointers)
+- [6. Appendix](#6-appendix)
+  - [6.1. References](#61-references)
+  - [6.2. Abbreviations](#62-abbreviations)
 
 ## 1. About this Document
 
 This document is maintained using Visual Studio Code, with help of the following
 plugins:
 
-- *Markdown All In One- to maintain the contents tables and formatting.
+- *Markdown All In One* - to maintain the contents tables and formatting.
 - *Rewrap* to keep lines at 80 characters
 - *Markdown Lint* to identify common problems with formatting
 - Spell checkers for common English errors, using British English.
@@ -203,7 +206,7 @@ private static SafeLibraryHandle LoadLibrary<T>(string fileName) {
   Uri assemblyLocation = new Uri(typeof(T).Assembly.Location);
   string libraryPath = Path.GetDirectoryName(assemblyLocation.LocalPath);
 
-  if (IntPtr.Size == 4) {
+  if (!Environment.Is64BitProcess) {
     libraryPath = Path.Combine(libraryPath, "x86", fileName);
   } else {
     libraryPath = Path.Combine(libraryPath, "x64", fileName);
@@ -232,6 +235,51 @@ m_CpuIdHandle` may not be finalized, resulting in a call to
 [`FreeLibrary`](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-freelibrary)
 which would otherwise unmap the loaded library and remove it from the process
 space memory.
+
+#### 3.2.1. .NET 3.1 Library Resolution
+
+With .NET Core, there's a new class `NativeLibrary` that can help resolve
+loading particular libraries, as described by [Custom Import
+Resolver](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/cross-platform#custom-import-resolver)
+
+```csharp
+namespace PInvokeSamples {
+  using System;
+  using System.Reflection;
+  using System.Runtime.InteropServices;
+
+  public static class Program {
+    [DllImport("nativedep")]
+    private static extern int ExportedFunction();
+
+    public static void Main(string[] args) {
+      // Register the import resolver before calling the imported function.
+      // Only one import resolver can be set for a given assembly.
+      NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
+
+      int value = ExportedFunction();
+      Console.WriteLine(value);
+    }
+
+    private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath) {
+      if (libraryName == "nativedep") {
+        // On systems with AVX2 support, load a different library.
+        if (System.Runtime.Intrinsics.X86.Avx2.IsSupported) {
+          return NativeLibrary.Load("nativedep_avx2", assembly, searchPath);
+        }
+      }
+
+      // Otherwise, fallback to default import resolver.
+      return IntPtr.Zero;
+    }
+  }
+}
+```
+
+using:
+
+- [NativeLibrary.SetDllImportResolver](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.nativelibrary.setdllimportresolver)
+- [NativeLibrary.Load](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.nativelibrary.load)
 
 ### 3.3. Win32 specific attributes
 
@@ -590,6 +638,82 @@ public struct STRRET_64
 Differences attribute that the union must be aligned to 4 bytes on 32-bit or 8
 bytes on 64-bit is due to maximum alignment of the `LPWSTR`.
 
+##### 4.5.1.1. Using C++ To Test Alignment (Example DbgHelp)
+
+If you are unsure, it is easy to write a small program in C++ for the Visual
+Studio Compiler and test the alignment of the fields. For example, the field
+`MINIDUMP_EXCEPTION_INFORMATION` requires the following definition:
+
+```csharp
+[StructLayout(LayoutKind.Sequential, Pack = 4)]
+public struct MINIDUMP_EXCEPTION_INFORMATION {
+    public uint ThreadId;
+    public IntPtr ExceptionPointers;
+    public int ClientPointers;
+}
+```
+
+With the following test program:
+
+```c++
+#include <Windows.h>
+#include <DbgHelp.h>
+#include <cstddef>
+#include <iostream>
+
+auto main() -> int {
+    std::cout << "Offset ThreadId: " <<
+        offsetof(MINIDUMP_EXCEPTION_INFORMATION, ThreadId) << std::endl;
+    std::cout << "Offset ExceptionPointers: " <<
+        offsetof(MINIDUMP_EXCEPTION_INFORMATION, ExceptionPointers) << std::endl;
+    std::cout << "Offset ClientPointers: " <<
+        offsetof(MINIDUMP_EXCEPTION_INFORMATION, ClientPointers) << std::endl;
+    return 0;
+}
+```
+
+On 32-bit it returns:
+
+- Offset `ThreadId`: 0
+- Offset `ExceptionPointers`: 4
+- Offset `ClientPointers`: 8
+
+On 64-bit it returns:
+
+- Offset `ThreadId`: 0
+- Offset `ExceptionPointers`: 4
+- Offset `ClientPointers`: 12
+
+We can clearly see that alignment with a packing of 4 bytes is required. If we
+don't align properly, the program is likely to crash in very difficult to debug
+ways.
+
+Even though in the previous section the default packing is 8 bytes for 64-bit,
+we clearly see experimentally that the packing is 4. The reason for this is
+found in the header:
+
+```c++
+#include <pshpack4.h>
+```
+
+And the contents of this header file is simple, a `pragma` is used to override
+the default:
+
+```c++
+#if ! (defined(lint) || defined(RC_INVOKED))
+#if ( _MSC_VER >= 800 && !defined(_M_I86)) || defined(_PUSHPOP_SUPPORTED)
+#pragma warning(disable:4103)
+#if !(defined( MIDL_PASS )) || defined( __midl )
+#pragma pack(push,4)
+#else
+#pragma pack(4)
+#endif
+#else
+#pragma pack(4)
+#endif
+#endif /* ! (defined(lint) || defined(RC_INVOKED)) */
+```
+
 #### 4.5.2. Blittable Strings (actually char[])
 
 As mentioned in [Blittable types when runtime marshalling is
@@ -722,9 +846,16 @@ the native code keeping a reference to the object.
 
 TBD
 
-## 5. Appendix
+## 5. Callbacks and Function Pointers
 
-### 5.1. References
+TBD.
+
+- [Function Pointers for Managed
+  Code](https://devblogs.microsoft.com/dotnet/improvements-in-native-code-interop-in-net-5-0/)
+
+## 6. Appendix
+
+### 6.1. References
 
 .NET Standard:
 
@@ -752,7 +883,7 @@ TBD
 - [HowTo: Marshal Structures using
   P/Invoke](https://learn.microsoft.com/en-us/cpp/dotnet/how-to-marshal-structures-using-pinvoke?redirectedfrom=MSDN&view=msvc-170)
 
-### 5.2. Abbreviations
+### 6.2. Abbreviations
 
 A list of abbreviations used in this document
 
